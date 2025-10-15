@@ -13,6 +13,16 @@ import java.text.Normalizer;
 @Controller
 public class MemberController {
 
+    @GetMapping("/restSignup")
+    public String restSignup() {
+        return "restSignup";
+    }
+
+    @GetMapping("/restLogin")
+    public String restLogin() {
+        return "restLogin";
+    }
+
     @GetMapping("/login")
     public String login() {
         return "login"; //로그인 화면, view name --> templates
