@@ -19,6 +19,8 @@ repositories {
 }
 
 dependencies {
+    //spring security gradle
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     //JDBC - jdbcTemplate
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     runtimeOnly 'mysql:mysql-connector-java:8.0.31'
