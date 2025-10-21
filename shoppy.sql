@@ -165,13 +165,26 @@ from
 
 -- hong 회원이 분홍색 후드티(pid : 1) 상품에 쓴 QnA 조회
 -- 회원아이디, 회원명, 가입날짜, 상품명, 상품가격, QnA 제목, 내용, 등록날짜
-
+-- QnA제목(title), 내용(content), 등록날짜(cdate)
+select * from product_qna;
 select * from product;
-select * from product_qna pq, product p where pq.pid = p.pid and p.name = '후드티' and p.id = 'hong';
+select * from member;
+select 
+	m.id,
+    m.name,
+    m.mdate,
+    p.name,
+    p.price,
+    pq.title,
+    pq.content,
+    pq.cdate
+ from member m, product p, product_qna pq
+where m.id = pq.id and p.pid = pq.pid
+	and m.id = 'hong' and p.pid = 1;
 
 
 
-    
+select qid, title, content, is_complete as isComplete, is_lock as isLock, id, pid, cdate from product_qna where pid = 1;
     
     
 
