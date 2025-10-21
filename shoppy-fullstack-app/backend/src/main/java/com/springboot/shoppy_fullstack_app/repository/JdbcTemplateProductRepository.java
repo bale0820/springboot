@@ -1,6 +1,8 @@
 package com.springboot.shoppy_fullstack_app.repository;
 
 import com.springboot.shoppy_fullstack_app.dto.Product;
+import com.springboot.shoppy_fullstack_app.dto.ProductDetailinfo;
+import com.springboot.shoppy_fullstack_app.dto.ProductQna;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -17,6 +19,14 @@ public class JdbcTemplateProductRepository implements ProductRepository{
     }
 
     @Override
+    public ProductDetailinfo findProductDetailinfo(int pid) {
+        String sql = "select did, title_en titleEn, title_ko titleKo, pid, list " +
+                "from product_detailinfo " +
+                "where pid = ?";
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(ProductDetailinfo.class), pid);
+    }
+
+    @Override
     public Product findByPid(int pid) {
         String sql = "select pid, name, price, info, rate, trim(image) as image, imgList from product where pid = ?";
         Product product = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Product.class), pid);
@@ -28,5 +38,22 @@ public class JdbcTemplateProductRepository implements ProductRepository{
         String sql = "select pid, name, price, info, rate, trim(image) as image, imgList from product";
         List<Product> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Product.class));
         return list;
+    }
+
+    @Override
+    public List<ProductQna> findQna(int pid) {
+        String sql = """
+                select qid,
+                       title,
+                       content,
+                       is_complete as isComplete,
+                       is_lock as isLock,
+                       id,
+                       pid,
+                       cdate 
+                from product_qna 
+                where pid = ? """;
+
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(ProductQna.class), pid);
     }
 }
