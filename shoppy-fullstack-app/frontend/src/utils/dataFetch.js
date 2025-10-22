@@ -1,4 +1,4 @@
- import axios from 'axios';
+import axios from 'axios';
 
 /**
  * 배열의 rows 그룹핑
@@ -19,47 +19,35 @@ export const groupByRows = (array, number) => {
     return rows;
 }
 
-
-/**
- * axiosPost 함수를 이용하여 백엔드 연동 처리
- */
-export const axiosPost = async (url, formData) => {
-    const response = await axios.post(url, formData,{"Content-Type" : "application/json"});
-    console.log(response);
-    /* const response = await axios({
-     method : "POST",
-     url : url,
-     headers : {"Content-Type" : "application/json"},
-     data : formData
-     }); */
-    return response.data;
-}
-
 /**
  * axiosGet 함수를 이용하여 백엔드 연동 처리
  */
 export const axiosGet = async (url) => {
     const response = await axios.get(url);
-    console.log(response);
-    /* const response = await axios({
-     method : "POST",
-     url : url,
-     headers : {"Content-Type" : "application/json"},
-     data : formData
-     }); */
     return response.data;
 }
 
-
-
 /**
  * axiosPost 함수를 이용하여 백엔드 연동 처리
+ */
+export const axiosPost = async (url, formData) => {
+    const response = await axios.post(url, formData, { "Content-Type": "application/json" });
+    /* const response = await axios({
+        method: "POST",
+        url: url,
+        headers: { "Content-Type": "application/json" },
+        data: formData
+    }); */
+    return response.data;
+}
+
+/**
+ * axios 함수를 이용하여 데이터 가져오기
  */
 export const axiosData = async (url) => {
     const response = await axios.get(url);
     return response.data;
 }
-
 
 /**
  * fetch 함수를 이용하여 데이터 가져오기

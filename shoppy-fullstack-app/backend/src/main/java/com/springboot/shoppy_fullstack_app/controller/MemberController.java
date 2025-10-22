@@ -2,26 +2,21 @@ package com.springboot.shoppy_fullstack_app.controller;
 
 import com.springboot.shoppy_fullstack_app.dto.Member;
 import com.springboot.shoppy_fullstack_app.service.MemberService;
-import com.springboot.shoppy_fullstack_app.service.MemberServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/member")
 //@CrossOrigin(origins = {"http://localhost:3000"})
 public class MemberController {
-    //서비스 객체 불러오기
     private final MemberService memberService;
 
-    @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
     }
 
-
     @PostMapping("/idcheck")
     public String idcheck(@RequestBody Member member) {
-        boolean result =  memberService.idCheck(member.getId()); //아이디 존재 : 1, 존재X : 0
+        boolean result = memberService.idCheck(member.getId());  //아이디 O: 1, X: 0
         String msg = "";
         if(result) msg = "이미 사용중인 아이디 입니다.";
         else msg = "사용이 가능한 아이디 입니다.";
@@ -32,21 +27,14 @@ public class MemberController {
     public boolean signup(@RequestBody Member member) {
         boolean result = false;
         int rows = memberService.signup(member);
-        if(rows == 1) {
-            result = true;
-        }
+        if(rows == 1) result = true;
         return result;
     }
 
+
     @PostMapping("/login")
     public boolean login(@RequestBody Member member) {
-        boolean result = false;
-       if(member.getId().equals("test") && member.getPwd().equals("1234"))
-           result = true;
-
-       boolean result1 = memberService.login(member);
-        System.out.println("result1 -->"+ result1);
-        return result1;
+        return memberService.login(member);
     }
 
 }

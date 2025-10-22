@@ -7,10 +7,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service //memberServiceImpl
-@Transactional //DB가 auto-commit 모드이면 생략가능
-public class MemberServiceImpl implements MemberService{ //MemberService memberService
-
+@Service
+//@Transactional  //: DB가 auto-commit 모드이면 생략가능
+public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -21,34 +20,27 @@ public class MemberServiceImpl implements MemberService{ //MemberService memberS
     }
 
     @Override
-    public boolean idCheck(String id) {
-        boolean result = true;
-        Long count = memberRepository.findId(id);
-        System.out.println("count --->" + count);
-        if(count == 0) {
-            result = false;
-        }
-
+    public boolean login(Member member) {
+        String encodePwd = memberRepository.login(member.getId());
+//        System.out.println(encodePwd);
+        boolean result = passwordEncoder.matches(member.getPwd(), encodePwd);
         return result;
     }
 
-
     @Override
-    public int signup(Member member) {
+    public int signup(Member member){
         //패스워드 인코딩
-        String encodePwd = passwordEncoder.encode(member.getPwd());//UUID타입으로 생성됨
-        System.out.println("encodePwd ==>>" + encodePwd);
+        String encodePwd = passwordEncoder.encode(member.getPwd());  //UUID 타입으로 생성됨
         member.setPwd(encodePwd);
+//        System.out.println("encodePwd ==>> " + encodePwd);
         return memberRepository.save(member);
-
     }
 
     @Override
-    public boolean login(Member member) {
-        String encodePwd = memberRepository.login(member.getId());
-        System.out.println(encodePwd);
-        boolean result = passwordEncoder.matches(member.getPwd(), encodePwd);
-
+    public boolean idCheck(String id) {
+        boolean result = true;
+        Long count = memberRepository.findById(id);
+        if(count == 0) result = false;
         return result;
     }
 

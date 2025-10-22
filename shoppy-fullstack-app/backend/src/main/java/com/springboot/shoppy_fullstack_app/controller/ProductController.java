@@ -1,9 +1,9 @@
 package com.springboot.shoppy_fullstack_app.controller;
 
-
 import com.springboot.shoppy_fullstack_app.dto.Product;
 import com.springboot.shoppy_fullstack_app.dto.ProductDetailinfo;
 import com.springboot.shoppy_fullstack_app.dto.ProductQna;
+import com.springboot.shoppy_fullstack_app.dto.ProductReturn;
 import com.springboot.shoppy_fullstack_app.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,34 +20,28 @@ public class ProductController {
         this.productService = productService;
     }
 
-
-    @GetMapping("/all")
-    public List<Product> all() {
-        System.out.println("controller!!!!");
-        return productService.findAll(); //리스트 타입은 제이슨으로 변환후 전달
-
-    }
-
-    @PostMapping("/pid")
-    public Product pid(@RequestBody Product product) {
-        System.out.println("controller!!!!");
-        return productService.findByPid(product.getPid()); //리스트 타입은 제이슨으로 변환후 전달
+    @GetMapping("/return")
+    public ProductReturn getReturn() {
+        return productService.findReturn();
     }
 
     @PostMapping("/qna")
     public List<ProductQna> qna(@RequestBody Product product) {
-        System.out.println("pid --->" + product.getPid());
-        List<ProductQna> result = productService.findQna(product.getPid());
-        System.out.println("list" + result );
-        return result;
+        return productService.findQna(product.getPid());
     }
 
     @PostMapping("/detailinfo")
     public ProductDetailinfo detailinfo(@RequestBody Product product) {
-//        System.out.println("pid --->" + product.getPid());
         return productService.findDetailinfo(product.getPid());
-
     }
 
+    @PostMapping("/pid")
+    public Product pid(@RequestBody Product product) {
+        return productService.findByPid(product.getPid());
+    }
 
+    @GetMapping("/all")
+    public List<Product> all() {
+        return productService.findAll();
+    }
 }

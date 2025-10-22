@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { PiGiftThin } from 'react-icons/pi';
 import { ImageList } from '../components/commons/ImageList.jsx';
 import { StarRating } from '../components/commons/StarRating.jsx';
@@ -7,15 +8,17 @@ import { Detail } from '../components/detailTabs/Detail.jsx';
 import { Review } from '../components/detailTabs/Review.jsx';
 import { QnA } from '../components/detailTabs/QnA.jsx';
 import { Return } from '../components/detailTabs/Return.jsx';
-import { useDispatch, useSelector } from 'react-redux';
 import { addCart } from '../feature/cart/cartAPI.js';
-import { getProduct } from '../feature/product/productAPI.js';
+import { getProduct, getProductList } from '../feature/product/productAPI.js';
 
 export function ProductDetail() {
-    const {pid} = useParams();  
+    const {pid} = useParams();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const product = useSelector((state) => state.product.product );
-    let imgList = useSelector((state) => state.product.imgList);
+    const product = useSelector((state) => state.product.product);
+    const imgList = useSelector((state) => state.product.imgList);
+    const isLogin = useSelector((state) => state.auth.isLogin);
+console.log("isLogin------>>", isLogin);
     const [size, setSize] = useState('XS');  
     const [tabName, setTabName] = useState('detail');
     const tabLabels = ['DETAIL', 'REVIEW', 'Q&A', 'RETURN & DELIVERY'];
@@ -29,7 +32,7 @@ export function ProductDetail() {
         <div className="content">
             <div className='product-detail-top'>
                 <div className='product-detail-image-top'>
-                    <img src={`/images/${product.image}`} />
+                    <img src={product.image && `/images/${product.image}`} />
                     <ImageList  className="product-detail-image-top-list"
                                 imgList={imgList}/>
                 </div>
@@ -67,7 +70,9 @@ export function ProductDetail() {
                                 className="product-detail-button order">바로 구매</button>
                         <button type="button"
                                 className="product-detail-button cart"
-                                onClick={()=>{dispatch(addCart(product.pid, size))}}
+                                onClick={()=>{
+                                    isLogin? dispatch(addCart(product.pid, size))
+                                    : navigate("/login")}}
                                 > 쇼핑백 담기</button>
                         <div type="button" className="gift">
                             <PiGiftThin />
@@ -85,7 +90,7 @@ export function ProductDetail() {
             <div className='product-detail-tab'>
                 <ul className='tabs'>
                     { tabLabels && tabLabels.map((label, i) => 
-                        <li className={tabName === tabEventNames[i]? "active": "" }>
+                        <li className={tabName === tabEventNames[i]? "active": "" } key={i}>
                             <button type="button"
                                     onClick={()=> setTabName(tabEventNames[i])}
                                 >{label}</button>
@@ -94,7 +99,7 @@ export function ProductDetail() {
                 </ul>
 
                 {tabName === "detail" 
-                                &&  <Detail imgList={imgList} pid={pid}/>}
+                                &&  <Detail imgList={imgList} pid={pid} />}
                 {tabName === "review" &&  <Review />}
                 {tabName === "qna" &&  <QnA pid={pid} />}
                 {tabName === "return" &&  <Return />}

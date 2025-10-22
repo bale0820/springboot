@@ -1,0 +1,26 @@
+*****  형상 관리 툴 : Git, Github ******
+** 공용 리파지토리의 현재 상태를 모든 팀원은 동일하게 유지!! **
+
+공용 리파지토리 : teamRepository 
+(1) 공통파일 액세스 : readme.md - 홍길동, 홍길순 (뉴버전)
+
+0. 팀원들은 teamRepository -> clone
+1. 홍길동 - readme.md : 홍길동 - add > commit > push
+2. 홍길순	- readme.md - git pull (뉴버전 업데이트)
+   readme.md : 홍길순
+3. 김철수
+
+(2) 팀원 개별 작업 : 개별 브랜치 생성
+1. 
+
+
+
+
+
+
+
+
+
+
+
+

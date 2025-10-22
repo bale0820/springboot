@@ -1,9 +1,16 @@
 HELP.md
-.gradle
+.gradle/
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+
+# Gradle caches
+.gradle/
+**/.gradle/
+**/build/
+**/out/
+
 
 ### STS ###
 .apt_generated

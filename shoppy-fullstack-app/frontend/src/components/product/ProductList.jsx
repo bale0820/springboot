@@ -27,7 +27,7 @@ export function ProductList() {
                     <div className='product-list' key={idx} >
                         {rowArray && rowArray.map((product, idx) =>
                             <Link to={`/products/${product.pid}`} key={idx}>
-                                <ProductAvatar img={product.image} />
+                                <ProductAvatar img={product.image}  />
                             </Link>                          
                         )}
                     </div>

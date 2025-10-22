@@ -21,7 +21,7 @@ export function Login() {
         setErrors({id:'', pwd:''});
     }
 
-    const handleLoginSubmit = async(e) => {
+    const handleLoginSubmit = async (e) => {
         e.preventDefault();
         const param = {
             idRef: idRef,
@@ -30,15 +30,14 @@ export function Login() {
             errors: errors
         }
        
-        const succ =  await dispatch(getLogin(formData, param));  // 비동기식 처리 후 isLogin 변경
-        console.log('succ--> ', succ); //동기식 처리 -> false
-            
+        const succ = await dispatch(getLogin(formData, param));
+
         if(succ) {
             alert("로그인에 성공하셨습니다.");
             navigate("/");
         } else {
             alert("로그인에 실패, 확인후 다시 진행해주세요.");
-            setFormData({id : '', pwd : ''});
+            setFormData({id:'', pwd:''});
             idRef.current.focus();
         }
     }

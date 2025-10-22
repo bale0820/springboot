@@ -1,25 +1,24 @@
-import React, {useEffect, useState} from 'react';
-import {getDetailinfo} from '../../feature/product/productAPI.js';
-import {ImageList}  from '../commons/ImageList.jsx';
+import React, { useEffect, useState } from 'react';
+import { ImageList } from '../commons/ImageList.jsx';
+import { getDetailinfo } from '../../feature/product/productAPI.js';
+
 /**
  * ProductDetail > Detail  
  */
 export function Detail({imgList, pid}) {
     const [info, setInfo] = useState({});
     useEffect(() => {
-        const loadData = async() => {
-               const jsonData = await getDetailinfo(pid);
-               setInfo(jsonData);
-            }
+        const loadData = async(pid) => {
+            const jsonData = await getDetailinfo(pid);
+            setInfo(jsonData);
+        }
         loadData(pid);
+    }, []);
 
-        },[]);
-
-    console.log("info ==> ", info);
     return (
         <div>
             <DetailImages imgList={imgList} />
-             <DetailInfo info={info} />
+            <DetailInfo info={info} />
         </div>
     );
 }
@@ -43,31 +42,17 @@ export function DetailImages({imgList}) {
  * ProductDetail > Detail > DetailInfo
  */
 export function DetailInfo({info}) {
-//     const {titleEn, titleKo, list} = info;
-//     console.log('titleEn=>', titleEn);
-//      console.log('titleKo=>', titleKo);
-//       console.log('list=>', list);
-
-  const { titleEn, titleKo, list } = info;
-  const parsedList = typeof list === "string" ? JSON.parse(list) : list;
-
-  console.log("titleEn=>", titleEn);
-  console.log("titleKo=>", titleKo);
-  console.log("list=>", parsedList);
-  console.log("type of list=>", typeof parsedList);
-
-
     return (
         <div className='detail-info'>
             <h4 className='detail-info-title-top'>
                 {info && info.titleEn} / {info && info.titleKo}
-                { parsedList &&  parsedList.map(item =>
+                {info.list && info.list.map(item =>
                     <div>
                         <h5 className='detail-info-title'>[{item.title}]</h5>
                         {item.title === "SIZE" || item.title === "MODEL SIZE" ?
                             <ul className='nolist'>
                                 <li>{item.type}</li>
-                                { item.title==="MODEL SIZE" && 
+                                { item.title==="MODEL SIZE" &&
                                     <>
                                     <li>{item.height}</li>
                                     <li>{item.size}</li>
@@ -87,7 +72,7 @@ export function DetailInfo({info}) {
                             </ul>
                          :
                             <ul className='list nolist'>
-                                {item.title === "FABRIC" && 
+                                {item.title === "FABRIC" &&
                                     <>
                                     <li>Color: {item.color}</li>
                                     <li>{item.material}</li>

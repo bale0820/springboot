@@ -1,19 +1,18 @@
 package com.springboot.shoppy_fullstack_app.service;
 
-
 import com.springboot.shoppy_fullstack_app.dto.Product;
 import com.springboot.shoppy_fullstack_app.dto.ProductDetailinfo;
 import com.springboot.shoppy_fullstack_app.dto.ProductQna;
+import com.springboot.shoppy_fullstack_app.dto.ProductReturn;
 import com.springboot.shoppy_fullstack_app.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
 //@Transactional
-public class ProductServiceImpl implements ProductService{
-
+public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Autowired
@@ -22,16 +21,16 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public ProductDetailinfo findDetailinfo(int pid) {
-        System.out.println("service ------------->");
-        return productRepository.findProductDetailinfo(pid);
+    public ProductReturn findReturn() { return productRepository.findReturn(); }
+
+    @Override
+    public List<ProductQna> findQna(int pid) {
+        return productRepository.findQna(pid);
     }
 
     @Override
-    public List<Product> findAll() {
-        System.out.println("service----------->");
-        List<Product> list = productRepository.findAll();
-        return list;
+    public ProductDetailinfo findDetailinfo(int pid) {
+        return productRepository.findProductDetailinfo(pid);
     }
 
     @Override
@@ -40,7 +39,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<ProductQna> findQna(int pid) {
-        return productRepository.findQna(pid);
+    public List<Product> findAll() {
+        List<Product> list = productRepository.findAll();
+        return list;
     }
 }
