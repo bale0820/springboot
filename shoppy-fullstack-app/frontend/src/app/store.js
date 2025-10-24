@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import cartSlice  from '../feature/cart/cartSlice.js'
 import productSlice  from '../feature/product/productSlice.js'
 import authSlice from '../feature/auth/authSlice.js'
+import supportSlice from '../feature/support/supportSlice.js'
 
 //액션 로깅 처리 담당 미들웨어
 const myLoggerMiddlware = (store) => (next) => (action) => {
@@ -27,7 +28,8 @@ export const store = configureStore({
   reducer: {
     cart: cartSlice,
     product: productSlice,
-    auth: authSlice
+    auth: authSlice,
+    support : supportSlice,
   },
 //  middleware: (getDefaultMiddleware) =>
 //                getDefaultMiddleware()

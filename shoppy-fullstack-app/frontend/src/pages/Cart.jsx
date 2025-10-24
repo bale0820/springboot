@@ -29,7 +29,11 @@ export function Cart() {
                         </div>
                         <div className='cart-quantity'>
                             <button type='button'
-                                    onClick={()=>{dispatch(updateCart(item.cid, '-'));}}>-</button>
+                                    onClick={() => {
+                                      if (item.qty > 1) {
+                                        dispatch(updateCart(item.cid, '-'));
+                                      }
+                                    }}>-</button>
                             <input type='text' value={item.qty} readOnly/>
                             <button type='button'
                                     onClick={()=>{dispatch(updateCart(item.cid, '+'));}}>+</button>
