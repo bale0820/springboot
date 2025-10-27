@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import "../styles/cart.css";
 import "../styles/checkoutinfo.css";
-
+import {getPayment} from '../feature/payment/paymentAPI.js';
 export function CheckoutInfo() {   
     const cartList = useSelector((state) => state.cart.cartList);
     const totalPrice = useSelector((state) => state.cart.totalPrice);
@@ -9,6 +9,11 @@ export function CheckoutInfo() {
     const name = cartList[0].mname;
     const phone = cartList[0].phone;
     const email = cartList[0].email;
+
+    const handlePayment = async() => {
+            const result = await getPayment();
+            console.log("result--->", result);
+        }
 return (
     <div className="cart-container">
     <h2 className="cart-header"> 주문/결제</h2>
@@ -141,7 +146,7 @@ return (
         <label for="privacy">개인정보 국외 이전 동의</label>
     </div>
 
-    <button className="pay-button">결제하기</button>
+    <button className="pay-button" onClick={handlePayment}>결제하기</button>
     </div>
 );
 }
