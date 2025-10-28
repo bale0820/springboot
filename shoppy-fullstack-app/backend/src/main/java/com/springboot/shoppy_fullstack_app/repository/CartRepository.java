@@ -6,7 +6,7 @@ import com.springboot.shoppy_fullstack_app.dto.CartListResponse;
 import java.util.List;
 
 public interface CartRepository {
-    int deleteItem(int cid);
+    int deleteItem(CartItem cartItem);
     List<CartListResponse> findList(CartItem cartItem);
     CartItem getCount(CartItem cartItem);
     int updateQty(CartItem cartItem);

@@ -11,8 +11,8 @@ export function Cart() {
     const dispatch = useDispatch();
     const cartList = useSelector((state) => state.cart.cartList);
     const totalPrice = useSelector((state) => state.cart.totalPrice);   
-     console.log("cartList", cartList);
-    useEffect(()=> {  dispatch(showCart());  }, []);    
+      
+    useEffect(()=> {  dispatch(showCart());  }, []);
 
     return (
         <div className='cart-container'>
@@ -20,7 +20,7 @@ export function Cart() {
             { cartList && cartList.map(item => 
                 <div key={item.pid}>
                     <div className='cart-item'>
-                        <img src={`images/${item.image}`} alt="product img" />
+                        <img src={`/images/${item.image}`} alt="product img" />
                         <div className='cart-item-details'>
                             <p className='cart-item-title'>{item.name}</p>
                             <p className='cart-item-title'>{item.size}</p>
@@ -29,17 +29,13 @@ export function Cart() {
                         </div>
                         <div className='cart-quantity'>
                             <button type='button'
-                                    onClick={() => {
-                                      if (item.qty > 1) {
-                                        dispatch(updateCart(item.cid, '-'));
-                                      }
-                                    }}>-</button>
+                                    onClick={()=>{item.qty > 1 && dispatch(updateCart(item.cid, "-"))}}>-</button>
                             <input type='text' value={item.qty} readOnly/>
                             <button type='button'
-                                    onClick={()=>{dispatch(updateCart(item.cid, '+'));}}>+</button>
+                                    onClick={()=>{dispatch(updateCart(item.cid, "+"))}}>+</button>
                         </div>
                         <button className='cart-remove'
-                                onClick={()=>{dispatch(removeCart(item.cid))}}>
+                                onClick={()=>{dispatch(removeCart(item.cid))}}> 
                             <RiDeleteBin6Line />
                         </button> 
                     </div>

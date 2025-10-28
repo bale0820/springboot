@@ -2,43 +2,27 @@ import React, {useState, useEffect} from 'react';
 import { SearchForm } from '../components/commons/SearchForm.jsx';
 import { MenuList } from '../components/commons/MenuList.jsx';
 import { axiosData } from '../utils/dataFetch.js';
-import {getList}  from '../feature/support/supportAPI.js';
-import { useDispatch, useSelector } from 'react-redux';
+import { getList } from '../feature/support/supportAPI.js';
+
 export function Support() {
     const [menus, setMenus] = useState([]);
     const [category, setCategory] = useState([]);
-    const [list, setList] = useState([]);
-    const dispatch = useDispatch();
-
+    const [list, setList] = useState([]);  
 
     useEffect(()=>{
         const fetch = async() => {
-            const jsonData = await axiosData("/data/support.json");
+            const jsonData = await axiosData("/data/support.json"); //카테고리 가져오기
             const list = await getList('all');
             setMenus(jsonData.menus);
             setCategory(jsonData.category);
-            setList(jsonData.list);
-
+            setList(list);
         }
         fetch();
     }, []);
 
     const filterList = async(stype) => {
-        console.log("type",stype);
         const list = await getList(stype);
-        console.log("list", list);
         setList(list);
-//         const filter = async() => {
-//             const jsonData = await axiosData("/data/support.json");
-//             if(type === 'all') {
-//                 setList(jsonData.list);
-//
-//             } else {
-//                 const filterData = jsonData.list.filter((item)=> item.type === type);
-//                 setList(filterData);
-//             }
-//         }
-//         filter();
     }    
 
     return (  

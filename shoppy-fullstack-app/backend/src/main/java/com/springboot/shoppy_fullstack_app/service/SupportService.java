@@ -5,5 +5,5 @@ import com.springboot.shoppy_fullstack_app.dto.Support;
 import java.util.List;
 
 public interface SupportService {
-    public List<Support> findAll(Support support);
+    List<Support> findAll(Support support);
 }

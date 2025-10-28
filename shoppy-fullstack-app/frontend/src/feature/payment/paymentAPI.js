@@ -1,16 +1,22 @@
-import {axiosPost} from '../../utils/dataFetch.js';
+import { axiosPost } from '../../utils/dataFetch.js';
 
-export const getPayment = async() => {
-    //userId, orderId, itemName, totalPrice ...
+export const getPayment = async(receiver, paymentInfo, cartList) => {
+console.log(cartList);
+    const cidList = cartList.map(item => item.cid);
+    const qty = cartList.reduce((sum, item) => sum + parseInt(item.qty), 0);
     const { userId } = JSON.parse(localStorage.getItem("loginInfo"));
-    const url = "/payment/kakao/ready"; //카카오 QR코드 호출
+    const url = "/payment/kakao/ready";  //카카오 QR 코드 호출
     const data = {
-        "orderId" : "1234",
-        "userId" : userId,
-        "itemName" : "테스트 상품",
-        "qty" : "10",
-        "totalAmount" : "1000"
+        "orderId": "",
+        "userId": userId,
+        "itemName": cartList[0].name,
+        "qty": qty,
+        "totalAmount": cartList[0].totalPrice,
+        "receiver": receiver,
+        "paymentInfo": paymentInfo,
+        "cidList": cidList //[38, 40, 42]
     }
+
     try {
         const kakaoReadyResult = await axiosPost(url, data);
         console.log("kakaoReadyResult => ", kakaoReadyResult);
@@ -18,8 +24,8 @@ export const getPayment = async() => {
             //새로운 페이지 연결
             window.location.href = kakaoReadyResult.next_redirect_pc_url;
         }
-    }catch(error) {
+
+    } catch(error) {
         console.log("error :: ", error);
     }
-
 }

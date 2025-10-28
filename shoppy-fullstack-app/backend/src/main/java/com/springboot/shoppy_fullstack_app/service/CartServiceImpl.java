@@ -18,13 +18,15 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public int deleteItem(int cid) {
-        return cartRepository.deleteItem(cid);
+    public int deleteItem(CartItem cartItem) {
+        return cartRepository.deleteItem(cartItem);
     }
+
     @Override
     public List<CartListResponse> findList(CartItem cartItem) {
         return cartRepository.findList(cartItem);
     }
+
     @Override
     public CartItem getCount(CartItem cartItem) {
         return cartRepository.getCount(cartItem);

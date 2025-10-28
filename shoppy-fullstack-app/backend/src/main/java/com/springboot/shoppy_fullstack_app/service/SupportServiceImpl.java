@@ -4,9 +4,7 @@ import com.springboot.shoppy_fullstack_app.dto.Support;
 import com.springboot.shoppy_fullstack_app.repository.SupportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-
 
 @Service
 public class SupportServiceImpl implements SupportService{
@@ -18,18 +16,14 @@ public class SupportServiceImpl implements SupportService{
         this.supportRepository = supportRepository;
     }
 
-//    @Autowired
-//    public setSupportServiceImpl(SupportRepository supportRepository) {
-//        this.supportRepository = supportRepository;
-//    }
     @Override
     public List<Support> findAll(Support support) {
-            List<Support> list = null;
-            if(support.getStype().equals("all")) {
-                list = supportRepository.findAll();
-            }else {
-                list = supportRepository.findAll(support);
-            }
-            return list;
+        List<Support> list = null;
+        if(support.getStype().equals("all")) {
+            list = supportRepository.findAll();
+        } else {
+            list = supportRepository.findAll(support);
+        }
+        return list;
     }
 }
