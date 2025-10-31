@@ -20,8 +20,8 @@ import java.util.UUID;
 public class KakaoPayController {
 
     private final KakaoPayService kakaoPayService;
-    private  final OrderService orderService;
-    private KakaoPay payInfo = null; //kakaoPay DTO 클래스를 전역으로 선언
+    private final OrderService orderService;
+    private KakaoPay payInfo = null; //KaKaoPay DTO 클래스를 전역으로 선언
 
     @Autowired
     public KakaoPayController(KakaoPayService kakaoPayService, OrderService orderService) {
@@ -36,9 +36,8 @@ public class KakaoPayController {
     @PostMapping("/kakao/ready")
     public KakaoReadyResponse paymentKakao(@RequestBody  KakaoPay kakaoPay) {
         //orderId(주문번호) 생성 : UUID 클래스 사용
+        payInfo = kakaoPay;   //kakaoPay 객체 주소를 payInfo 복사, 전역으로 확대
         kakaoPay.setOrderId(UUID.randomUUID().toString());
-        payInfo = kakaoPay;
-
         String TEMP_TID = null;
         KakaoReadyResponse response = kakaoPayService.kakaoPayReady(kakaoPay);
 
@@ -68,7 +67,8 @@ public class KakaoPayController {
         // 3. 결제 완료 처리 (DB 상태 업데이트 등)
         //DB 상태 업데이트 - 주문상품을 order, order_detail 테이블에 저장, cart에서는 삭제
         int result = orderService.save(payInfo);
-        System.out.println("kakaopay ::: result ======> " + result);
+        System.out.println("kakaopay ::: result========>> " + result);
+
         URI redirect = URI.create("http://localhost:3000/payResult?orderId=" + orderId + "&status=success");
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(redirect);

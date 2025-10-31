@@ -14,7 +14,7 @@ console.log(cartList);
         "totalAmount": cartList[0].totalPrice,
         "receiver": receiver,
         "paymentInfo": paymentInfo,
-        "cidList": cidList //[38, 40, 42]
+        "cidList": cidList  //[38, 40, 42]
     }
 
     try {

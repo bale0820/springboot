@@ -8,21 +8,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 //@Transactional
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository){
         this.orderRepository = orderRepository;
     }
+
     @Override
-    @Transactional
-    public  int save(KakaoPay kakaoPay) {
+    @Transactional  //DB연동로직을 하나의 트랜잭션으로 관리
+    public int save(KakaoPay kakaoPay) {
         int rows = orderRepository.saveOrders(kakaoPay);
         if(!(rows == 1)) System.out.println("결제 실패!!");
+
         int rows_detail = orderRepository.saveOrderDetail(kakaoPay);
         if(!(rows_detail < 1)) System.out.println("결제 실패!!");
+
         int rows_cart = orderRepository.deleteCartItem(kakaoPay.getCidList());
+
         return rows;
     }
 }
