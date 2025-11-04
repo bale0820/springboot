@@ -41,7 +41,7 @@ public class CartController {
 //        String sid = (String)session.getAttribute("sid");
 //        String ssid = session.getId();
 //        ResponseEntity<?> response = null;
-//
+
 //        if(ssid != null && sid != null) {  //로그인 회원
 //            System.out.println("ssid :: " + ssid + "sid ::" + sid);
 //            List<CartListResponse> list = cartService.findList(cartItem);

@@ -46,6 +46,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .authenticationProvider(authenticationProvider())
                 .csrf((csrf) -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
@@ -53,15 +54,14 @@ public class SecurityConfig {
                 .cors((cors) -> cors
                         .configurationSource(corsConfigurationSource())
                 )
-                .authenticationProvider(authenticationProvider())
-                .securityContext(sc -> sc.requireExplicitSave(true)) // ← 선택. true면 아래 로그인 컨트롤러에서 save 필요
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 )
+                .securityContext(sc -> sc.requireExplicitSave(true)) // ← 선택. true면 아래 로그인 컨트롤러에서 save 필요
                 .httpBasic(basic -> basic.disable())
                 .formLogin(form -> form.disable())
                 .requestCache(rc -> rc.disable()) //로그인 후 리다이렉트 방지
-//                .securityContext(sc -> sc.requireExplicitSave(true)) //인증정보 세션 자동저장 방지
+                .securityContext(sc -> sc.requireExplicitSave(true)) //인증정보 세션 자동저장 방지
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/csrf/**", "/member/**", "/product/**", "/cart/**", "/support/**", "/payment/**").permitAll()
                         .anyRequest().authenticated()
@@ -163,3 +163,6 @@ final class SpaCsrfTokenRequestHandler implements CsrfTokenRequestHandler {
         return (StringUtils.hasText(headerValue) ? this.plain : this.xor).resolveCsrfTokenValue(request, csrfToken);
     }
 }
+
+
+

@@ -71,8 +71,7 @@ public class KakaoPayController {
                                          @RequestParam("pg_token") String pgToken,
                                          HttpServletRequest request) {
 
-        /*******************  카카오 페이 결제 성공 후 세션 복원 시작  ********************/
-        
+        /// /////////////
         // 0. 현재 SecurityContext에 Authentication이 있는지 확인
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -117,7 +116,9 @@ public class KakaoPayController {
             System.out.println("✅ 기존 Authentication 유지됨: " + auth.getName());
         }
 
-        /*******************  카카오 페이 결제 성공 후 세션 복원 종료  ********************/
+
+
+        /// //////////////
 
         // 1. tid, userId 조회
         String tid = kakaoPayService.findByTid(orderId);

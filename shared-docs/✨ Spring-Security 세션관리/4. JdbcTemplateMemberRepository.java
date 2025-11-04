@@ -18,9 +18,6 @@ public class JdbcTemplateMemberRepository  implements  MemberRepository{
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    /**
-     * Spring-Security의 AuthenticationProvider 객체에 의해 UserDetailsService 호출
-     */
     @Override
     public Optional<Member> findByMember(String id) {
         String sql = "select ifnull(MAX(id), null) as id, " +
@@ -33,8 +30,7 @@ public class JdbcTemplateMemberRepository  implements  MemberRepository{
             return Optional.empty();
         }
     }
-    
-    
+
     @Override
     public String login(String id) {
         String sql = "select ifnull(MAX(pwd), null) as pwd from member where id = ?";

@@ -3,6 +3,7 @@ import { validateFormCheck,  validateSignupFormCheck } from '../../utils/validat
 import { axiosPost } from '../../utils/dataFetch.js';
 import { getCartCount } from '../../feature/cart/cartAPI.js';
 import { updateCartCount, resetCartCount } from '../../feature/cart/cartSlice.js';
+import { refreshCsrfToken } from '../csrf/manageCsrfToken.js';
 
 /**
     Id 중복 체크
@@ -36,8 +37,8 @@ export const getLogin = (formData, param) => async(dispatch) => {
         const result = await axiosPost(url, formData);
         console.log("result :: ", result);
         if(result.login) {
+            await refreshCsrfToken();
             dispatch(login({"userId":formData.id}));
-//            const count = await getCartCount(formData.id);
             dispatch(getCartCount(formData.id));
             return true;
         }
@@ -52,6 +53,7 @@ export const getLogout = () => async(dispatch) => {
     const url = "/member/logout";
     const result = await axiosPost(url, {});
     if(result) {
+        await refreshCsrfToken();
         dispatch(logout());
         dispatch(resetCartCount());
     }
