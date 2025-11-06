@@ -10,18 +10,20 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-    private final JpaMemberRepository jpamemberRepository;
+    private final JpaMemberRepository jpaMemberRepository;
 
     @Autowired
-    public CustomUserDetailsService(JpaMemberRepository jpamemberRepository) {
-        this.jpamemberRepository = jpamemberRepository;
+    public CustomUserDetailsService(JpaMemberRepository jpaMemberRepository) {
+        this.jpaMemberRepository = jpaMemberRepository;
     }
 
     @Override  //DB연동
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        MemberDto member = jpamemberRepository.findByMember(userId)
+        MemberDto member = jpaMemberRepository.findByMember(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("not found: " + userId));
 
         //member가 null이 아니면 USER 객체 즉 회원으로 인증되어 SecurityContext에 저장됨

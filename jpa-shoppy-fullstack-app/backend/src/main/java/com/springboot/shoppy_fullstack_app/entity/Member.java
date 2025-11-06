@@ -1,6 +1,5 @@
 package com.springboot.shoppy_fullstack_app.entity;
 
-
 import com.springboot.shoppy_fullstack_app.dto.MemberDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +9,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name="member")
@@ -18,27 +16,44 @@ import java.time.LocalDateTime;
 @Getter
 public class Member {
     @Id
-    @Column(name = "id", length = 50)
+    @Column(name="id", length=50)
     private String id;
-    @Column(name="pwd", length = 100)
+
+    @Column(name="pwd", length=100)
     private String pwd;
+
     @Column(name="name", length = 20, nullable = false)
     private String name;
-    @Column(name="phone", length = 13)
+
+    @Column(name="phone", length=13)
     private String phone;
-    @Column(name="email", length = 50)
+
+    @Column(name="email", length=50)
     private String email;
+
     @Column(name="mdate")
     private LocalDate mdate;
 
-    //😊 생성자를 반드시 정의!!!
+    //✨ 생성자를 반드시 정의!!!
     public Member() {}
     public Member(MemberDto memberDto) {
         this.id = memberDto.getId();
-        this.pwd =  memberDto.getPwd();
+        this.pwd = memberDto.getPwd();
         this.name = memberDto.getName();
-        this.phone =  memberDto.getPhone();
-        this.email =  memberDto.getEmail();
+        this.phone = memberDto.getPhone();
+        this.email = memberDto.getEmail();
         this.mdate = LocalDate.now();
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+

@@ -19,9 +19,8 @@ java {
 //}
 
 dependencies {
-    //spring security
+    //JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
 
     //spring security
     implementation 'org.springframework.boot:spring-boot-starter-security'
