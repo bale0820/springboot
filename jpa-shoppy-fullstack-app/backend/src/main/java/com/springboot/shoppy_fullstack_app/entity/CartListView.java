@@ -1,9 +1,17 @@
-package com.springboot.shoppy_fullstack_app.dto;
+package com.springboot.shoppy_fullstack_app.entity;
 
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class CartListResponse {
+@Entity
+@Table(name="view_cartlist")
+@Setter @Getter
+public class CartListView {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int cid;
+
     private String id;
     private String mname;
     private String phone;
@@ -15,6 +23,5 @@ public class CartListResponse {
     private int price;
     private String size;
     private int qty;
-    private int cid;
     private int totalPrice;
 }

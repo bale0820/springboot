@@ -46,8 +46,8 @@ export function DetailInfo({info}) {
         <div className='detail-info'>
             <h4 className='detail-info-title-top'>
                 {info && info.titleEn} / {info && info.titleKo}
-                {info.list && info.list.map(item =>
-                    <div>
+                {info.list && info.list.map((item, idx) =>
+                    <div key={idx}>
                         <h5 className='detail-info-title'>[{item.title}]</h5>
                         {item.title === "SIZE" || item.title === "MODEL SIZE" ?
                             <ul className='nolist'>
@@ -79,8 +79,8 @@ export function DetailInfo({info}) {
                                     </>
                                 }
                                 {
-                                    item.description && item.description.map(desc =>
-                                        <li>{desc}</li>
+                                    item.description && item.description.map((desc, idx) =>
+                                        <li key={idx}>{desc}</li>
                                     )
                                 }
                             </ul>

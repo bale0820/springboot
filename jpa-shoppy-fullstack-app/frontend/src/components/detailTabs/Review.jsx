@@ -46,8 +46,8 @@ export function ReviewTop({ data }) {
                                     style="star-black-big" />
                     </div>
                 </li>
-                { data.topList && data.topList.map(item => 
-                    <li>
+                { data.topList && data.topList.map((item, idx) =>
+                    <li key={idx}>
                         <ReviewType title={item.title}
                                     names={item.names}
                                     values={item.values}
@@ -69,7 +69,7 @@ export function ReviewType({title, names, values}) {
         <div className='review-type'>
             <p className='review-type text'>{title}</p>
             {names && names.map((name, idx) => 
-                <div className="bar-metadata">
+                <div className="bar-metadata" key={idx}>
                     <span className="bar-text1">{name}</span>
                     <div className="bar-bg">
                     <div

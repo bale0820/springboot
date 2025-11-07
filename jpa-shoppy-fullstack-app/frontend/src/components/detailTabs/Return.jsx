@@ -18,14 +18,14 @@ export function Return() {
             <p style={{paddingBottom:"20px"}}>{returnData && returnData.description}</p>
             <table className='review-list-content'>
                 <tbody>
-                    {returnData.list && returnData.list.map(item => 
-                        <tr>
+                    {returnData.list && returnData.list.map((item, idx) =>
+                        <tr key={idx}>
                             <td style={{width:"30%", textAlign:"center"}}>{item.title}</td>
                             <td>
                                 <ul  style={{textAlign:"left"}}>
                                 {item.infoList 
-                                    && item.infoList .map(item =>
-                                        <li>{item}</li>
+                                    && item.infoList .map((item, idx) =>
+                                        <li key={idx}>{item}</li>
                                     )}
                                 </ul>
                             </td>

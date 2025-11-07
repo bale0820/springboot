@@ -41,8 +41,8 @@ export function QnA({pid}) {
             </div>
             <table className='review-list-content'>
                 <tbody>
-                    {qnaData && qnaData.map(item =>
-                        <tr>
+                    {qnaData && qnaData.map((item, idx) =>
+                        <tr key={idx}>
                             <td style={{width:"10%"}}>
                                 {item.isComplete ? <span>답변완료</span>
                                                  : <span>답변준비중</span> }
