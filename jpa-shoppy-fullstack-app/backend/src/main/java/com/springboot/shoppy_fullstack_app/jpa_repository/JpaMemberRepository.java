@@ -21,8 +21,12 @@ public interface JpaMemberRepository extends JpaRepository<Member, String> {
 
     //로그인 - 엔티티가 아닌 다른 객체로 결과를 출력하는 경우 'new 패키지 풀주소 출력객체명'
     //        형식으로 컬럼리스트를 작성, 출력값에 따른 생성자 정의 필수!!!
-    @Query("select new com.springboot.shoppy_fullstack_app.dto.MemberDto(m.id, m.pwd) " +
-            " from Member m where m.id = :id")
+    @Query("""
+            select 
+                new com.springboot.shoppy_fullstack_app.dto.MemberDto(m.id, m.pwd, m.role) 
+            from Member m 
+            where m.id = :id
+            """)
     Optional<MemberDto> findByMember(@Param("id") String id);
 }
 

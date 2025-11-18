@@ -36,13 +36,13 @@ public class OrderServiceImpl implements OrderService {
         int rows = jpaOrderRepository.saveOrderDetail(kakaoPayDto.getOrderId(),
                                 kakaoPayDto.getPaymentInfo().getDiscountAmount(),
                                 kakaoPayDto.getCidList());
-        if(rows == 0) System.out.println("step2 주문 상세 테이블 저장 실패!!");
+        if(rows == 0) new Exception("step2 주문 상세 테이블 저장 실패!!");
 
         //Step3 : Cart 테이블 아이템 삭제 - JpaCartRepository에서 삭제 진행
         int cartRows = jpaCartRepository.deleteItemList(kakaoPayDto.getCidList());
-        if(cartRows == 0) System.out.println("step3 장바구니 아이템 삭제 실패!!");
+        if(cartRows == 0) new Exception("step3 장바구니 아이템 삭제 실패!!");
 
-        if(entity != null && rows != 0 && cartRows != 0) result = 1;
+        result = 1;
 
         return result;
     }
