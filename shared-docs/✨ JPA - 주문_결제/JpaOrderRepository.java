@@ -1,4 +1,4 @@
-package com.springboot.shoppy_fullstack_app.repository;
+package com.springboot.shoppy_fullstack_app.jpa_repository;
 
 import com.springboot.shoppy_fullstack_app.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,12 +11,12 @@ import java.util.List;
 
 @Repository
 public interface JpaOrderRepository extends JpaRepository<Order, Integer> {
-    /** step1 : 주문/결제 - 주문(Orders) 테이블 저장 **/
-    Order save(Order entity);
+    /*** 👌 Step: 1 주문/결제 - 주문 테이블 저장    */
+    Order save(Order order);
 
-    /** step2 : 주문/결제 - 주문상세(Order_detail) 테이블 저장, 서브쿼리, Native-Query  **/
+    /*** 👌 Step: 2 주문/결제 - 주문 상세 테이블 저장    */
     @Modifying
-    @Query(value= """
+    @Query(value = """
             INSERT INTO 
                 order_detail(order_code, pid, pname, size, qty, pid_total_price, discount)
             SELECT 
@@ -26,17 +26,9 @@ public interface JpaOrderRepository extends JpaRepository<Order, Integer> {
             WHERE cid IN (:cidList)
             """, nativeQuery = true)
     int saveOrderDetail(@Param("orderCode") String orderCode,
-                        @Param("discount") Integer discount,
-                        @Param("cidList") List<Integer> cidList);
+                          @Param("discount") Integer discountAmount,
+                          @Param("cidList") List<Integer> cidList);
+
+
+
 }
-
-
-
-
-
-
-
-
-
-
-

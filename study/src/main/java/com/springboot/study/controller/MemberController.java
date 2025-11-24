@@ -6,60 +6,74 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.text.Normalizer;
 
 @Controller
 @RequestMapping("/member")
 public class MemberController {
-
+    /**
+     * REST API 회원가입 화면
+     */
     @GetMapping("/restSignup")
     public String restSignup() {
-        return "restSignup";
+        return "restSignup";  //view name
     }
-
+    
+    /**
+     * REST API 로그인 화면
+     */
     @GetMapping("/restLogin")
     public String restLogin() {
-        return "restLogin";
+        return "restLogin";  //view name
     }
 
     @GetMapping("/login")
     public String login() {
-        return "login"; //로그인 화면, view name --> templates
+        return "login";  //로그인 화면, view name --> templates
     }
 
-//    /** Spring legacy 버전 --> ModelAndView 객체를 활용하여 데이터 및 view 전송
-//    @PostMapping("/login")
-//    public ModelAndView login(@RequestParam String id, @RequestParam String pass) {
-//        ModelAndView model = new ModelAndView();
-//        String result = "";
-//        if(id.equals("test") && pass.equals("1234")) result = "[ModelandView]로그인 성공!!";
-//        else result = "[ModelandView]로그인실패";
-//        model.addObject("result",result);
-//        model.setViewName("loginResult");
-//        return model;
-//    }
+    /** Spring Legacy 버전  --> ModelAndView 객체를 활용하여 데이터 및 view 전송
     @PostMapping("/login")
-    public String login(Member member, Model model) {
+    public ModelAndView login(@RequestParam String id, @RequestParam String pass) {
+        ModelAndView model = new ModelAndView();
+        String result = "";
+        if(id.equals("test") && pass.equals("1234")) result = "[ModelAndView]로그인 성공!!";
+        else result = "[ModelAndView]로그인 실패";
+
+        model.addObject("result", result);
+        model.setViewName("loginResult");
+        return model;
+    }
+    */
+
+    @PostMapping("/login")
+    public String login(Member member
+                        , Model model) {
         String result = "";
         if(member.getId().equals("test") && member.getPass().equals("1234")) result = "로그인 성공!!";
-        else result = "로그인실패";
-        model.addAttribute("result",result);
+        else result = "로그인 실패";
+        model.addAttribute("result", result);
 
-
-        return "loginResult";
+        return "loginResult";   //view name : templates ==> loginResult.html
     }
 
     @GetMapping("/signup")
     public String signup() {
-        return "signup"; //로그인 화면, view name --> templates
+        return "signup";  //회원가입 화면, view name --> templates
     }
 
     @PostMapping("/signup")
     public String signup(Member member, Model model) {
-        model.addAttribute("member",member);
-        return "signupResult"; //로그인 화면, view name --> templates
+        model.addAttribute("member", member);
+        return "signupResult";
     }
+
 }
+
+
+
+
+
+
+
+
+

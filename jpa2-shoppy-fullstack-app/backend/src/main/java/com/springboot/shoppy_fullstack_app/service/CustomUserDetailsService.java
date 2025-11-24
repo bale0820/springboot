@@ -2,7 +2,6 @@ package com.springboot.shoppy_fullstack_app.service;
 
 import com.springboot.shoppy_fullstack_app.dto.MemberDto;
 import com.springboot.shoppy_fullstack_app.entity.Member;
-import com.springboot.shoppy_fullstack_app.repository.JpaMemberRepository;
 import com.springboot.shoppy_fullstack_app.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
